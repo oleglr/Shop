@@ -12,4 +12,10 @@ namespace app\controllers;
 class Controller
 {
 
+    public function __set ( $name , $value ) {
+        echo "Записать свойство {$name} нельзя, так как его не существует \n";
+    }
+    public function __get ( $name ) {
+        echo "Получить свойство {$name} нельзя, так как его не существует \n";
+    }
 }

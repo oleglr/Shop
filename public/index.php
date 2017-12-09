@@ -1,6 +1,6 @@
 <?php
 require '../base/App.php';
-//\app\base\App::call()->run();
+\app\base\App::call()->run();
 
 
 
