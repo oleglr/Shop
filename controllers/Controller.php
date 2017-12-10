@@ -12,6 +12,11 @@ namespace app\controllers;
 class Controller
 {
 
+    public function runAction($controller = null, $action = null)
+    {
+
+    }
+
     public function __set ( $name , $value ) {
         echo "Записать свойство {$name} нельзя, так как его не существует \n";
     }

@@ -7,5 +7,19 @@
  */
 
 return [
-    'root_dir' => $_SERVER['DOCUMENT_ROOT']."/../"
+    'root_dir' => $_SERVER['DOCUMENT_ROOT']."/../",
+    'components' => [
+        'db' => [
+            'class' => \app\services\Db::class,
+            'driver' => 'mysql',
+            'host' => 'localhost',
+            'login' => 'root',
+            'password' => '',
+            'database' => 'myShop',
+            'charset' => 'UTF8'
+        ],
+        'main' => [
+            'class' => \app\controllers\FrontController::class
+        ]
+    ],
 ];
