@@ -9,7 +9,7 @@
 namespace app\controllers;
 
 
-class ProductController
+final class ProductController
 {
 
 }

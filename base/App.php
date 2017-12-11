@@ -8,7 +8,8 @@
 
 namespace app\base;
 
-include '../traits/TSingleton.php';
+require '../vendor/autoload.php';
+require '../traits/TSingleton.php';
 
 use app\controllers\Controller;
 use app\services\Db;
@@ -39,18 +40,9 @@ class App
 
     public function run()
     {
-        //подгружаем массив конфига
         $this->config = include "../config/config.php";
-        //запускаем автозагрузчик файлов
-        $this->autoloadRegister();
         //запускаем FrontController
         $this->main->runAction();
-    }
-
-    private function autoloadRegister()
-    {
-        require '../services/Autoloader.php';
-        spl_autoload_register([new \app\services\Autoloader(), "loadClass"]);
     }
 
     public function __get($name)

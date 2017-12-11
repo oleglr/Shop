@@ -9,7 +9,7 @@
 namespace app\controllers;
 
 
-class UserController
+final class UserController
 {
 
 }

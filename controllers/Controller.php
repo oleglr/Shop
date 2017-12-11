@@ -17,10 +17,18 @@ class Controller
 
     }
 
-    public function __set ( $name , $value ) {
+    final public function testController()
+    {
+
+    }
+
+    public function __set($name, $value)
+    {
         echo "Записать свойство {$name} нельзя, так как его не существует \n";
     }
-    public function __get ( $name ) {
+
+    public function __get($name)
+    {
         echo "Получить свойство {$name} нельзя, так как его не существует \n";
     }
 }
