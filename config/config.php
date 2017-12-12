@@ -8,6 +8,7 @@
 
 return [
     'root_dir' => $_SERVER['DOCUMENT_ROOT']."/../",
+    'controller_namespace' => 'app\controllers\\',
     'components' => [
         'db' => [
             'class' => \app\services\Db::class,

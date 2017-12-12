@@ -13,8 +13,21 @@ namespace app\controllers;
  * Class ProductController
  * @package app\controllers
  */
-final class ProductController
+final class ProductController extends Controller
 {
+
+
+
+
+    public function actionIndex()
+    {
+        echo "Полный каталог";
+    }
+
+    public function actionView()
+    {
+        echo "Карточка товара";
+    }
 
 
 

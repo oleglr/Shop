@@ -42,7 +42,7 @@ class App
     public function run()
     {
         $this->config = include "../config/config.php";
-        //запускаем Controller
+        //запускаем FrontController
         $this->main->runAction();
     }
 

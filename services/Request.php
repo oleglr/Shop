@@ -41,7 +41,6 @@ class Request
                 $this->params = $matches['params'][0];
                 return;
             }
-            throw new \Exception("Ошибка 404");
         }
     }
 

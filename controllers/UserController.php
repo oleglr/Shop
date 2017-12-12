@@ -13,7 +13,7 @@ namespace app\controllers;
  * Class UserController
  * @package app\controllers
  */
-final class UserController
+final class UserController extends Controller
 {
 
 }

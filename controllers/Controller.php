@@ -23,11 +23,14 @@ class Controller
     protected $actionName;
     private $defaultAction = 'index';
 
+
     public function runAction($controller = null, $action = null)
     {
+
         $this->controllerName = $controller;
         $this->actionName = $action ?: $this->defaultAction;
         $action = "action" . ucfirst($this->actionName);
+        //формируем имя actiona и запускаем как метод класса
         $this->$action();
     }
 
