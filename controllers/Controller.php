@@ -8,13 +8,27 @@
 
 namespace app\controllers;
 
-
+/**
+ * Запуск FrontController c обработкой request запроса в браузере
+ * Рендеринг шаблона, вывод на экран
+ *
+ * Class Controller
+ * @package app\controllers
+ * @property string controllerName
+ * @property string actionName
+ */
 class Controller
 {
+    protected $controllerName;
+    protected $actionName;
+    private $defaultAction = 'index';
 
     public function runAction($controller = null, $action = null)
     {
-
+        $this->controllerName = $controller;
+        $this->actionName = $action ?: $this->defaultAction;
+        $action = "action" . ucfirst($this->actionName);
+        $this->$action();
     }
 
     final public function testController()

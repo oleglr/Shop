@@ -20,6 +20,9 @@ return [
         ],
         'main' => [
             'class' => \app\controllers\FrontController::class
+        ],
+        'request' => [
+            'class' => \app\services\Request::class
         ]
     ],
 ];

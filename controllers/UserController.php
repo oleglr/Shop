@@ -9,6 +9,10 @@
 namespace app\controllers;
 
 
+/**
+ * Class UserController
+ * @package app\controllers
+ */
 final class UserController
 {
 

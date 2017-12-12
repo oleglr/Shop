@@ -9,6 +9,10 @@
 namespace app\traits;
 
 
+/**
+ * Trait TSingleton
+ * @package app\traits
+ */
 trait TSingleton
 {
     private static $instance = null;

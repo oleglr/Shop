@@ -9,7 +9,13 @@
 namespace app\controllers;
 
 
+/**
+ * Class ProductController
+ * @package app\controllers
+ */
 final class ProductController
 {
+
+
 
 }

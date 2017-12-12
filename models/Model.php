@@ -9,6 +9,10 @@
 namespace app\models;
 
 
+/**
+ * Class Model
+ * @package app\models
+ */
 class Model
 {
 

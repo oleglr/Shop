@@ -9,6 +9,10 @@
 namespace app\services;
 
 
+/**
+ * Class Db
+ * @package app\services
+ */
 class Db
 {
     private $config;

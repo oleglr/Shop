@@ -16,12 +16,13 @@ use app\services\Db;
 use app\traits\TSingleton;
 
 /**
- * Class App
- * @package app\base
  * Используем Синглтон для одиночного подключения класса
- * автозагрузчик файлов
+ * подключили автозагрузчик файлов Composera
  * используем магический метод get для подключения компонентов прописанных в конфиге
  * запускаем FrontController для обработки строки(controller/action/id) переданной в бразуер
+ *
+ * Class App
+ * @package app\base
  * @property Controller main
  * @property Db db
  */
@@ -41,16 +42,24 @@ class App
     public function run()
     {
         $this->config = include "../config/config.php";
-        //запускаем FrontController
+        //запускаем Controller
         $this->main->runAction();
     }
 
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function __get($name)
     {
         return $this->get($name);
     }
 
-    private function get($key)
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    private function get(string $key)
     {
         if (!isset($this->items[$key])) {
             $this->items[$key] = $this->createComponent($key);
@@ -58,7 +67,12 @@ class App
         return $this->items[$key];
     }
 
-    private function createComponent($name)
+    /**
+     * @param string $name
+     * @return object
+     * @throws \Exception
+     */
+    private function createComponent(string $name)
     {
         if (isset($this->config['components'][$name])) {
             $params = $this->config['components'][$name];
