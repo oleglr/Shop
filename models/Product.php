@@ -9,7 +9,16 @@
 namespace app\models;
 
 
-class Product
+class Product extends Model
 {
 
+    /**
+     * Product constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->tableName = "products";
+        $this->entityClass = Product::class;
+    }
 }

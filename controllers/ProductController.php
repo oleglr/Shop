@@ -8,6 +8,8 @@
 
 namespace app\controllers;
 
+use app\base\App;
+use app\models\Product;
 
 /**
  * Class ProductController
@@ -16,17 +18,26 @@ namespace app\controllers;
 final class ProductController extends Controller
 {
 
-
-
-
     public function actionIndex()
     {
         echo "Полный каталог";
+        $products = $this->getModel()->getAll();
+        var_dump($products);
     }
 
     public function actionView()
     {
-        echo "Карточка товара";
+        $id = App::call()->request->getParams();
+        if(!$product = $this->getModel()->getOne($id)){
+            throw new \Exception("Нет такой страницы");
+        }
+      //  return $product;
+        var_dump($product);
+    }
+
+    private function getModel()
+    {
+        return new Product();
     }
 
 

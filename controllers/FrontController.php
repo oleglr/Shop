@@ -11,6 +11,7 @@ namespace app\controllers;
 use app\base\App;
 
 /**
+ * Роутинг приложения
  * Получаем имя контроллера, актион
  * создаем экзмепляр класса на основе полученного имени контроллера и запускам runAction
  * Class FrontController
@@ -20,8 +21,7 @@ use app\base\App;
 class FrontController extends Controller
 {
     private $controller;
-    private $defaultController = 'Product';
-
+    private $defaultController = 'product';  //перенести в конфиг
 
     protected function actionIndex()
     {
@@ -29,15 +29,12 @@ class FrontController extends Controller
         $this->controllerName = $request->getControllerName() ?: $this->defaultController;
         $this->actionName = $request->getActionName();
         $this->controller = App::call()->config['controller_namespace'] . ucfirst($this->controllerName) . 'Controller';
+        $controller = new $this->controller();
         try {
-            (new $this->controller)->runAction($this->controllerName, $this->actionName);
+            $controller->runAction($this->controllerName, $this->actionName);
         } catch (\Exception $e) {
-            $e->getMessage();
+            $this->redirect('product');
         }
-
-
-
-     //   var_dump($this->controllerName);
 
     }
 

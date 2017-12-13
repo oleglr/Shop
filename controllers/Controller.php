@@ -26,17 +26,22 @@ class Controller
 
     public function runAction($controller = null, $action = null)
     {
-
         $this->controllerName = $controller;
         $this->actionName = $action ?: $this->defaultAction;
         $action = "action" . ucfirst($this->actionName);
-        //формируем имя actiona и запускаем как метод класса
+        //формируем имя actiona и запускаем как метод вызываемого класса
         $this->$action();
     }
 
-    final public function testController()
+    protected function redirect($url)
     {
+        header("Location: /$url");
+    }
 
+
+    public function __call($name, $arguments)
+    {
+        echo "Вызываемый метод $name не существует";
     }
 
     public function __set($name, $value)
