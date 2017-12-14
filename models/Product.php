@@ -9,6 +9,11 @@
 namespace app\models;
 
 
+/**
+ * Товары
+ * Class Product
+ * @package app\models
+ */
 class Product extends Model
 {
 

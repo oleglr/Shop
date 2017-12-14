@@ -8,6 +8,10 @@
 
 namespace app\controllers;
 
+use app\base\App;
+use app\interfaces\IRenderer;
+use app\services\Renderer;
+
 /**
  * Запуск FrontController c обработкой request запроса в браузере
  * Рендеринг шаблона, вывод на экран
@@ -22,7 +26,20 @@ class Controller
     protected $controllerName;
     protected $actionName;
     private $defaultAction = 'index';
+    private $useLayout = true;
+    private $layout = 'main';
+    /** @var Renderer|null  */
+    private $renderer = null;
 
+
+    /**
+     * Controller constructor.
+     * @param null $renderer
+     */
+    public function __construct(IRenderer $renderer = null)
+    {
+        $this->renderer = $renderer;
+    }
 
     public function runAction($controller = null, $action = null)
     {
@@ -31,6 +48,23 @@ class Controller
         $action = "action" . ucfirst($this->actionName);
         //формируем имя actiona и запускаем как метод вызываемого класса
         $this->$action();
+    }
+
+    public function render($template, $params = [])
+    {
+        if($this->useLayout){
+            return $this->renderTemplate("layouts/{$this->layout}",
+                ['content' => $this->renderTemplate($template, $params)]
+            );
+        } else {
+            return $this->renderTemplate($template, $params);
+        }
+    }
+
+    private function renderTemplate($template, $params = [])
+    {
+
+        return $this->renderer->render($template, $params);
     }
 
     protected function redirect($url)

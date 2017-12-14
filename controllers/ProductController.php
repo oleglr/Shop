@@ -20,21 +20,22 @@ final class ProductController extends Controller
 
     public function actionIndex()
     {
-        echo "Полный каталог";
         $products = $this->getModel()->getAll();
-        var_dump($products);
+        echo $this->render("{$this->controllerName}/$this->actionName", ['products' => $products]);
     }
 
     public function actionView()
     {
         $id = App::call()->request->getParams();
         if(!$product = $this->getModel()->getOne($id)){
-            throw new \Exception("Нет такой страницы");
+            throw new \Exception("404");
         }
-      //  return $product;
-        var_dump($product);
+        echo $this->render("{$this->controllerName}/$this->actionName", ['product' => $product]);
     }
 
+    /**
+     * @return Product
+     */
     private function getModel()
     {
         return new Product();

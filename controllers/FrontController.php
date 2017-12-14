@@ -9,6 +9,7 @@
 namespace app\controllers;
 
 use app\base\App;
+use app\services\Renderer;
 
 /**
  * Роутинг приложения
@@ -23,17 +24,18 @@ class FrontController extends Controller
     private $controller;
     private $defaultController = 'product';  //перенести в конфиг
 
+
     protected function actionIndex()
     {
         $request = App::call()->request;
         $this->controllerName = $request->getControllerName() ?: $this->defaultController;
         $this->actionName = $request->getActionName();
         $this->controller = App::call()->config['controller_namespace'] . ucfirst($this->controllerName) . 'Controller';
-        $controller = new $this->controller();
+        $controller = new $this->controller(new Renderer());
         try {
             $controller->runAction($this->controllerName, $this->actionName);
         } catch (\Exception $e) {
-            $this->redirect('product');
+            $this->redirect('index');
         }
 
     }

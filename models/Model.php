@@ -11,6 +11,7 @@ namespace app\models;
 use app\base\App;
 
 /**
+ * Абстрактная модель дл выборки записей из БД
  * Class Model
  * @package app\models
  */
@@ -40,7 +41,6 @@ abstract class Model
         );
     }
 
-
     /**
      * @return mixed
      */
@@ -49,5 +49,20 @@ abstract class Model
         return $this->conn->fetchAll("SELECT * FROM {$this->tableName}",
             $this->entityClass
         );
+    }
+
+    public function create()
+    {
+
+    }
+
+    public function update()
+    {
+
+    }
+
+    public function delete()
+    {
+
     }
 }
