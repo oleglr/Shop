@@ -21,7 +21,15 @@ final class ProductController extends Controller
     public function actionIndex()
     {
         $products = $this->getModel()->getAll();
-        echo $this->render("{$this->controllerName}/$this->actionName", ['products' => $products]);
+
+        foreach ($products as $product) {
+            $images = $this->getModel()->getImg($product->id);
+            $img[$product->id] = (!empty($images[0]->small)) ? $images[0]->small : false;
+        }
+        echo $this->render("{$this->controllerName}/$this->actionName", [
+            'products' => $products,
+            'img' => $img
+        ]);
     }
 
     public function actionView()
@@ -30,7 +38,11 @@ final class ProductController extends Controller
         if(!$product = $this->getModel()->getOne($id)){
             throw new \Exception("404");
         }
-        echo $this->render("{$this->controllerName}/$this->actionName", ['product' => $product]);
+        $images = $this->getModel()->getImg($id);
+        echo $this->render("{$this->controllerName}/$this->actionName", [
+            'product' => $product,
+            'images' => $images
+        ]);
     }
 
     /**

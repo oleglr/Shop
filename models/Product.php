@@ -16,6 +16,7 @@ namespace app\models;
  */
 class Product extends Model
 {
+    private $tableNameImg;
 
     /**
      * Product constructor.
@@ -23,7 +24,17 @@ class Product extends Model
     public function __construct()
     {
         parent::__construct();
-        $this->tableName = "products";
+        $this->tableName = 'products';
+        $this->tableNameImg = 'img_products';
         $this->entityClass = Product::class;
     }
+
+    public function getImg(int $idProduct)
+    {
+        return $this->conn->fetchAll("SELECT * FROM {$this->tableNameImg} WHERE id_product = $idProduct",
+            $this->entityClass
+        );
+    }
+
+
 }
