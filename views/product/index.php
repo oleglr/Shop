@@ -1,11 +1,9 @@
 <h1>Каталог товаров</h1>
 <? foreach ($products as $product): ?>
-    <div class="product-item">
-        <h2><a href="/product/view/<?=$product->id?>"><?=$product->name?></a></h2>
-        <p><img src="<?=$img[$product->id]?>"></p>
-        <p><?=$product->description?></p>
-        <p>Цена: <?=$product->price?></p>
-        <p>Дата создания:<?=$product->created_at?></p>
-        <p>Дата изменения:<?=$product->updated_at?></p>
+    <div class="item">
+        <a href="/product/view/<?=$product->id?>"><img src="<?=$img[$product->id]?>" alt="<?=$product->name?>" title="<?=$product->name?>"></a>
+        <h3 class="item-name"><a href="/product/view/<?=$product->id?>"><?=$product->name?></a></h3>
+        <p class="price"><?=$product->price?>р.</p>
+        <p class="add-to-basket"><a href="#" onclick="" title="Добавить в корзину">Купить</a></p>
     </div>
 <? endforeach; ?>

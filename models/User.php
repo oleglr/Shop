@@ -9,7 +9,20 @@
 namespace app\models;
 
 
-class User
+class User extends Model
 {
+    protected static $fields = [
+        'name',
+        'login',
+        'password',
+        'created_at'
+    ];
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->tableName = 'users';
+        $this->entityClass = User::class;
+    }
 
 }

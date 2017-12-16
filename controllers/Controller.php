@@ -25,11 +25,13 @@ class Controller
 {
     protected $controllerName;
     protected $actionName;
-    private $defaultAction = 'index';
+    protected $defaultAction = 'index';  //перенести в конфиг
+    protected $defaultController = 'product';  //перенести в конфиг
     private $useLayout = true;
     private $layout = 'main';
     /** @var Renderer|null  */
     private $renderer = null;
+    protected $message = [];
 
 
     /**
@@ -70,6 +72,11 @@ class Controller
     protected function redirect($url)
     {
         header("Location: /$url");
+    }
+
+    public function getDate()
+    {
+        return date('Y-m-d H-i-s');
     }
 
 

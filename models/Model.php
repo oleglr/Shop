@@ -20,6 +20,7 @@ abstract class Model
     protected $tableName;
     protected $conn;
     protected $entityClass;
+    protected $attributes = [];
 
     /**
      * Model constructor.
@@ -51,9 +52,25 @@ abstract class Model
         );
     }
 
-    public function create()
+    public function create(array $data)
     {
+        $dataString = $this->prepareAttributes($data);
+        $columns = implode(', ', array_keys($this->attributes));
+        if(!empty($this->attributes)){
+            return $this->conn->execute("INSERT INTO {$this->tableName} ({$columns}) VALUES ({$dataString})");
+        }
+    }
 
+    public function prepareAttributes(array $data)
+    {
+        $dataString = '';
+        foreach ($data as $key => $val){
+            if(in_array($key, static::$fields)){
+                $dataString .= ",'$val'";
+                $this->attributes[$key] = $val;
+            }
+        }
+        return substr($dataString, 1);
     }
 
     public function update()

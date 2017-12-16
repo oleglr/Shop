@@ -22,7 +22,6 @@ use app\services\Renderer;
 class FrontController extends Controller
 {
     private $controller;
-    private $defaultController = 'product';  //перенести в конфиг
 
 
     protected function actionIndex()
@@ -35,7 +34,7 @@ class FrontController extends Controller
         try {
             $controller->runAction($this->controllerName, $this->actionName);
         } catch (\Exception $e) {
-            $this->redirect('index');
+            $this->redirect('./');
         }
 
     }
