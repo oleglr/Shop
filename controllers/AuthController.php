@@ -9,6 +9,7 @@
 namespace app\controllers;
 
 use app\models\User;
+use app\services\Auth;
 
 class AuthController extends Controller
 {
@@ -20,47 +21,51 @@ class AuthController extends Controller
 
     public function actionLogin()
     {
+        if($_SERVER['REQUEST_METHOD'] == "POST"){
+            if(!$user = $this->getModel()->getByLoginPass(trim(strip_tags($_POST['login'])), trim(strip_tags($_POST['password'])))){
+                $message = "Вы ввели не корректные данные!";
+                echo $this->render("{$this->controllerName}/$this->actionName", ['message' => $message]);
+                return false;
+            }
+            (new Auth())->openSession($user);
+            $this->redirect('product');
+        }
         echo $this->render("{$this->controllerName}/$this->actionName");
+    }
+
+    public function actionLogout()
+    {
+        unset($_SESSION['sid']);
+        session_destroy();
+        $this->redirect('product');
     }
 
     public function actionSignup()
     {
         if($_SERVER['REQUEST_METHOD'] == "POST"){
-            if((new User())->create(
+            if($this->getModel()->create(
                 [
                     'name' => trim(strip_tags($_POST['name'])),
                     'login' => trim(strip_tags($_POST['login'])),
-                    'password' => trim(strip_tags($_POST['password'])),
+                    'password' => md5(trim(strip_tags($_POST['password']))),
                     'created_at' => trim(strip_tags($this->getDate()))
                 ]
             )
             ){
-                echo "Регистрация прошла";
-
-//                если пользователь успешно зарегистрирован - то его автоматически авторизовывать на сайте
-
-
+                if(!$user = $this->getModel()->getByLoginPass(trim(strip_tags($_POST['login'])), trim(strip_tags($_POST['password'])))){
+                    return false;
+                }
+                (new Auth())->openSession($user);
+                $this->redirect('product');
             }
-//
-//
-//
-//
-//            if(!$user = (new UserRep())->getByLoginPass($login, $pass)){
-//                return false;
-//            }
-//            $this->openSession($user);
-//            return true;
-
-          //  echo "POST";
-//            if((new Auth())->login($_POST['login'], $_POST['pass'])){
-//                $this->redirect('product');
-//            }
         } else {
             echo $this->render("{$this->controllerName}/$this->actionName");
         }
+    }
 
-        // echo $this->render("auth/login");
-      //
+    private function getModel()
+    {
+        return new User();
     }
     
 }

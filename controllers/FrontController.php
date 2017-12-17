@@ -9,6 +9,7 @@
 namespace app\controllers;
 
 use app\base\App;
+use app\models\User;
 use app\services\Renderer;
 
 /**
@@ -23,21 +24,29 @@ class FrontController extends Controller
 {
     private $controller;
 
-
     protected function actionIndex()
     {
         $request = App::call()->request;
         $this->controllerName = $request->getControllerName() ?: $this->defaultController;
         $this->actionName = $request->getActionName();
         $this->controller = App::call()->config['controller_namespace'] . ucfirst($this->controllerName) . 'Controller';
+        $this->checkLogin();
         $controller = new $this->controller(new Renderer());
         try {
             $controller->runAction($this->controllerName, $this->actionName);
         } catch (\Exception $e) {
             $this->redirect('./');
         }
-
     }
 
+    private function checkLogin(){
+        session_start();
+        if($this->controller != "\\" . AuthController::class){
+            $user = (new User())->getCurrent();
+            if(!empty($_SESSION['sid']) && is_null($user)){
+                $this->redirect('auth/logout');
+            }
+        }
+    }
 
 }

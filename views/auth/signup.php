@@ -1,3 +1,4 @@
+<? if(!$_SESSION['sid']): ?>
 <h2>Регистрация на сайте</h2>
 <?php if(!empty($message[0])){ ?>
     <u><?=$message[0]?></u>
@@ -9,4 +10,4 @@
         <input type="submit" name="submit" value="Зарегистрироваться" ">
     </form>
 <?php } ?>
-
+<? endif; ?>

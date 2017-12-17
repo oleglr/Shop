@@ -27,23 +27,15 @@
                     <li><a href="/" class="active">Главная</a></li>
                     <li><a href="/product">Каталог</a></li>
                     <li><a href="/guestbook">Отзывы</a></li>
-                    <li><a href="/gallery">Фото</a></li>
                     <li><a href="/contact">Контакты</a></li>
-                    <li><a href='/auth/login'><u>Войти</u></a></li>
-                    <li><a href='/auth/signup'><u>Регистрация</u></a></li>
-
-<!--                    --><?php
-//                    if(isset($_SESSION[login]) && isset($_SESSION[pass])) {
-//                        echo "<li><a href='login.php?action=profile'><u>Личный кабинет</u></a></li>";
-//                        echo "<li><a href='login.php?action=logout'><u>Выйти</u> </a>($_SESSION[login])</li>";
-//                    }else{
-//                        echo "<li><a href='login.php'><u>Войти</u></a></li>";
-//                        echo "<li><a href='reg.php'><u>Регистрация</u></a></li>";
-//                    }
-//                    if(isset($_SESSION[login]) && isset($_SESSION[pass]) && $_SESSION[login] == 'admin') {
-//                        ?>
-<!--                        <li><a href="../admin/">Админка</a></li>-->
-<!--                    --><?//}?>
+                    <?php if(!empty($_SESSION['sid'])): ?>
+                        <li>Личный кабинет:</li>
+                        <li><?=ucfirst($_SESSION['name'])?> (<?=$_SESSION['login']?>) </li>
+                        <li><a href='/auth/logout'><u>Выйти</u> </a></li>
+                    <?php else: ?>
+                        <li><a href='/auth/login'><u>Войти</u></a></li>
+                        <li><a href='/auth/signup'><u>Регистрация</u></a></li>
+                   <?php endif; ?>
                 </ul>
             </div>
         </nav>
