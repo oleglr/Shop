@@ -26,7 +26,7 @@
                 <ul>
                     <li><a href="/" class="active">Главная</a></li>
                     <li><a href="/product">Каталог</a></li>
-                    <li><a href="/guestbook">Отзывы</a></li>
+                    <li><a href="/guestbook/">Отзывы</a></li>
                     <li><a href="/contact">Контакты</a></li>
                     <?php if(!empty($_SESSION['sid'])): ?>
                         <li>Личный кабинет:</li>
