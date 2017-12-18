@@ -24,6 +24,18 @@ return [
         ],
         'request' => [
             'class' => \app\services\Request::class
+        ],
+        'comment' => [
+            'class' => \app\models\Comments::class
+        ],
+        'product' => [
+            'class' => \app\models\Product::class
+        ],
+        'user' => [
+            'class' => \app\models\User::class
+        ],
+        'category' => [
+            'class' => \app\models\Category::class
         ]
     ],
 ];

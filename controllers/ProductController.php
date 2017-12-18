@@ -50,9 +50,7 @@ final class ProductController extends Controller
      */
     private function getModel()
     {
-        return new Product();
+        return App::call()->product;
     }
-
-
 
 }

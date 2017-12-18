@@ -26,9 +26,9 @@
                 <ul>
                     <li><a href="/" class="active">Главная</a></li>
                         <ul>
-                            <li><a href="">Acer</a></li>
-                            <li><a href="">Samsung</a></li>
-                            <li><a href="">HP</a></li>
+                        <? foreach ($categories as $category): ?>
+                            <li><a href="/category/view/<?=$category->id?>"><?=$category->name?></a></li>
+                        <? endforeach; ?>
                         </ul>
                     <li><a href="/guestbook">Отзывы</a></li>
                     <li><a href="/contact">Контакты</a></li>

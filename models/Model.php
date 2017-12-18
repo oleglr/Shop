@@ -37,7 +37,7 @@ abstract class Model
      */
     public function getOne(int $id)
     {
-        return $this->conn->fetchOne("SELECT * FROM {$this->tableName} WHERE id = :id", ['id' => $id],
+        return $this->conn->fetchOne("SELECT * FROM {$this->tableName} WHERE status = 1 and id = :id", ['id' => $id],
             $this->entityClass
         );
     }
@@ -47,7 +47,7 @@ abstract class Model
      */
     public function getAll()
     {
-        return $this->conn->fetchAll("SELECT * FROM {$this->tableName}",
+        return $this->conn->fetchAll("SELECT * FROM {$this->tableName} where status = 1",
             $this->entityClass
         );
     }

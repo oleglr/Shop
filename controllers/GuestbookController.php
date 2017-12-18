@@ -8,7 +8,7 @@
 
 namespace app\controllers;
 
-
+use app\base\App;
 use app\models\Comments;
 
 class GuestbookController extends Controller
@@ -38,6 +38,6 @@ class GuestbookController extends Controller
 
     private function getModel()
     {
-        return new Comments();
+        return App::call()->comment;
     }
 }

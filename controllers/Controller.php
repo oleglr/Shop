@@ -55,8 +55,12 @@ class Controller
     public function render($template, $params = [])
     {
         if($this->useLayout){
+            $categories = App::call()->category->getAll();
             return $this->renderTemplate("layouts/{$this->layout}",
-                ['content' => $this->renderTemplate($template, $params)]
+                [
+                    'content' => $this->renderTemplate($template, $params),
+                    'categories' => $categories
+                ]
             );
         } else {
             return $this->renderTemplate($template, $params);

@@ -8,6 +8,7 @@
 
 namespace app\controllers;
 
+use app\base\App;
 use app\models\User;
 use app\services\Auth;
 
@@ -35,7 +36,7 @@ class AuthController extends Controller
 
     public function actionLogout()
     {
-        unset($_SESSION['sid']);
+        session_unset();
         session_destroy();
         $this->redirect('product');
     }
@@ -65,7 +66,7 @@ class AuthController extends Controller
 
     private function getModel()
     {
-        return new User();
+        return App::call()->user;
     }
     
 }
