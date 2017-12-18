@@ -49,6 +49,10 @@ header .logotip img{
 .leftblock .menu ul li a:hover, header .menu ul .active{
     color: #fff;
 }
+.leftblock .menu ul ul{
+    padding-left: 20px;
+    border-bottom: 1px dotted #fff;
+}
 .leftblock{
     display: inline-block;
     width: 170px;
