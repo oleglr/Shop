@@ -16,14 +16,17 @@ class CategoryController extends Controller
     public function actionView()
     {
         $idCategory = App::call()->request->getParams();
+        $category = App::call()->category->getOne($idCategory);
         $products = $this->getModel()->getProductsByCategory($idCategory);
         foreach ($products as $product) {
             $images = App::call()->product->getImg($product->id);
             $img[$product->id] = (!empty($images[0]->small)) ? $images[0]->small : false;
         }
+        App::call()->shop->setBasket();
         echo $this->render("{$this->controllerName}/$this->actionName", [
             'products' => $products,
-            'img' => $img
+            'img' => $img,
+            'category' => $category
         ]);
     }
 

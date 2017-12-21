@@ -30,6 +30,7 @@ class Auth
         $sid = $this->generateStr();
         (new Session())->createNew($user->id, $sid, date("Y-m-d H:i:s"));
          $_SESSION[$this->sessionKey] = $sid;
+         $_SESSION['idUser'] = $user->id;
          $_SESSION['name'] = $user->name;
          $_SESSION['login'] = $user->login;
     }

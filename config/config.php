@@ -36,6 +36,9 @@ return [
         ],
         'category' => [
             'class' => \app\models\Category::class
+        ],
+        'shop' => [
+            'class' => \app\controllers\ShopController::class
         ]
     ],
 ];

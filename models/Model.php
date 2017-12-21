@@ -9,6 +9,7 @@
 namespace app\models;
 
 use app\base\App;
+use app\services\Db;
 
 /**
  * Абстрактная модель дл выборки записей из БД
@@ -18,14 +19,14 @@ use app\base\App;
 abstract class Model
 {
     protected $tableName;
+    /**
+     * @var Db conn
+     */
     protected $conn;
     protected $entityClass;
     protected $attributes = [];
 
-    /**
-     * Model constructor.
-     * @param $conn
-     */
+
     public function __construct()
     {
         $this->conn = App::call()->db;
@@ -78,8 +79,8 @@ abstract class Model
 
     }
 
-    public function delete()
+    public function delete($nameColumn, $valueColumn)
     {
-
+        return $this->conn->execute("DELETE FROM {$this->tableName} WHERE $nameColumn = $valueColumn");
     }
 }

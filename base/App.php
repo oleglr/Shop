@@ -12,6 +12,8 @@ require '../vendor/autoload.php';
 require '../traits/TSingleton.php';
 
 use app\controllers\Controller;
+use app\controllers\ShopController;
+use app\models\Category;
 use app\services\Db;
 use app\traits\TSingleton;
 
@@ -25,6 +27,7 @@ use app\traits\TSingleton;
  * @package app\base
  * @property Controller main
  * @property Db db
+ * @property ShopController shop
  */
 class App
 {

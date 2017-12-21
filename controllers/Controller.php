@@ -56,10 +56,12 @@ class Controller
     {
         if($this->useLayout){
             $categories = App::call()->category->getAll();
+            $mBasket = App::call()->shop->miniBasket();
             return $this->renderTemplate("layouts/{$this->layout}",
                 [
                     'content' => $this->renderTemplate($template, $params),
-                    'categories' => $categories
+                    'categories' => $categories,
+                    'mBasket' => $mBasket
                 ]
             );
         } else {

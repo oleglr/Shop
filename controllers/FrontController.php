@@ -22,6 +22,7 @@ use app\services\Renderer;
  */
 class FrontController extends Controller
 {
+
     private $controller;
 
     protected function actionIndex()
@@ -31,6 +32,7 @@ class FrontController extends Controller
         $this->actionName = $request->getActionName();
         $this->controller = App::call()->config['controller_namespace'] . ucfirst($this->controllerName) . 'Controller';
         $this->checkLogin();
+        /** @var  Controller $controller */
         $controller = new $this->controller(new Renderer());
         try {
             $controller->runAction($this->controllerName, $this->actionName);

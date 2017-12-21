@@ -22,7 +22,7 @@ class GuestbookController extends Controller
                     'fio' => trim(strip_tags($_POST['fio'])),
                     'email' => trim(strip_tags($_POST['email'])),
                     'text' => trim(strip_tags($_POST['text'])),
-                    'created_at' => trim(strip_tags($this->getDate()))
+                    'created_at' => $this->getDate()
                 ]
             )){
                 return false;

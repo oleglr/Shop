@@ -21,7 +21,7 @@ final class ProductController extends Controller
     public function actionIndex()
     {
         $products = $this->getModel()->getAll();
-
+        App::call()->shop->setBasket();
         foreach ($products as $product) {
             $images = $this->getModel()->getImg($product->id);
             $img[$product->id] = (!empty($images[0]->small)) ? $images[0]->small : false;
@@ -39,6 +39,7 @@ final class ProductController extends Controller
             throw new \Exception("404");
         }
         $images = $this->getModel()->getImg($id);
+        App::call()->shop->setBasket();
         echo $this->render("{$this->controllerName}/$this->actionName", [
             'product' => $product,
             'images' => $images

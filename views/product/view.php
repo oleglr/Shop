@@ -7,7 +7,7 @@
         </div>
         <div class="small-img">
             <? foreach ($images as $img): ?>
-                <a href="<?=$img->big?>" target="_blank"><img src="<?=$img->small?>"></a>
+                <img src="<?=$img->small?>">
             <? endforeach; ?>
         </div>
     </div>
@@ -18,7 +18,13 @@
         </div>
         <div class="o-pay">
             <p class="price"><?=$product->price?>р.</p>
-            <p class="add-to-basket"><a href="#" title="Добавить в корзину">Купить</a></p>
+<!--            <p class="add-to-basket"><a href="#" title="Добавить в корзину">Купить</a></p>-->
+            <form method="post">
+                <input type="hidden" name="id" value="<?=$product->id?>">
+                <input type="hidden" name="name" value="<?=$product->name?>">
+                <input type="hidden" name="price" value="<?=$product->price?>">
+                <input type="submit" value="Добавить в корзину">
+            </form>
         </div>
     </div>
 </div>

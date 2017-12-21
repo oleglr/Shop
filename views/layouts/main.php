@@ -44,7 +44,17 @@
             </div>
         </nav>
     </div>
+
     <div class="content">
+        <div class="basket">
+            <b>Корзина:</b>
+            <? /** @var \app\controllers\ShopController $mBasket */ ?>
+            <? if(empty($mBasket['amount'])):?>
+                пусто
+            <? else: ?>
+                <a href="/basket/full"><u>товары:<?=$mBasket['amount']?></u></a> (<?=$mBasket['price']?> руб.)
+            <? endif; ?>
+        </div>
         <h1>Интернет-магазин ноутбуков</h1>
         <hr>
         <?=$content?>
