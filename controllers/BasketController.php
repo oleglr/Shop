@@ -10,42 +10,79 @@ namespace app\controllers;
 
 
 use app\base\App;
-use app\models\Model;
+use app\interfaces\IRenderer;
+use app\models\Basket;
+
 
 class BasketController extends Controller
 {
-    private $countAll;
-    private $priceAll;
     private $fullBasket;
-    private $product;
+    private $data;
+    private $products;
+
+    /**
+     * BasketController constructor.
+     * @param null $renderer
+     */
+    public function __construct(IRenderer $renderer = null)
+    {
+        $this->renderer = $renderer;
+        $this->fullBasket = $this->getModel()->getBasket($this->getIdBasket());
+        $this->prepareBasket();
+    }
 
 
     public function actionFull()
     {
-        $this->prepareBasket();
-        $this->fullBasket = $this->getShop()->getModel()->getBasket($this->getShop()->idBasket);
-
+        $priceAll = $amountAll = 0;
         foreach ($this->fullBasket as $item) {
-            $this->priceAll += $item->price;
-            $count = $this->getShop()->getModel()->getCountByProduct($item->id_product, $this->getShop()->idBasket);
-            $this->product[$item->id_product] = [
+            $this->products[$item->id_product] = [
                 'id' => $item->id_product,
                 'name' => $item->name_product,
                 'price' => $item->price,
-                'count' => $count[0]->count
+                'count' => $item->amount
             ];
+
+            $amountAll += $item->amount;
+            $priceAll += $item->price * $item->amount;
         }
 
-        $this->countAll = count($this->fullBasket);
-        $data = [
-            'countAll' => $this->countAll,
-            'price' => $this->priceAll
+        $this->data = [
+            'countAll' => $amountAll,
+            'price' => $priceAll
         ];
 
         echo $this->render("{$this->controllerName}/$this->actionName", [
-            'products' => $this->product,
-            'data' => $data
+            'products' => $this->products,
+            'data' => $this->data
         ]);
+
+    }
+
+    public function actionOrder()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            if ($this->getModel()->updateOrderByBasket($this->getIdBasket(), $_POST['export'], $_POST['payment'])) {
+                $date = new \DateTime('-30 days');
+                $this->getModel()->clearDays($date->format('Y-m-d'));
+                $message = true;
+            }
+        }
+        echo $this->render("{$this->controllerName}/$this->actionName", [
+            'message' => $message
+        ]);
+    }
+
+    public function actionOrders()
+    {
+        $products = $this->getModel()->getBasket($this->getIdBasket(), 1);
+        if (empty($products)) {
+            $products = false;
+        }
+        echo $this->render("{$this->controllerName}/$this->actionName", [
+            'products' => $products
+        ]);
+
 
     }
 
@@ -53,16 +90,41 @@ class BasketController extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             if ($_POST['clear']) {
-                $this->getShop()->getModel()->delete('id_basket', $this->getShop()->idBasket);
+                $this->getModel()->clear('id_basket', $this->getIdBasket());
                 $this->redirect('./');
+            } elseif ($_POST['submit']) {
+                if ($_POST['delete']) {
+
+                    foreach ($_POST['delete'] as $item) {
+                        $this->getModel()->deleteProductByBasket($this->getIdBasket(), $item);
+                    }
+
+                    if (empty($this->getModel()->getBasket($this->getIdBasket()))) {
+                        $this->redirect('./');
+                    } else {
+                        $this->redirect("./basket/full/");
+                    }
+                }
+
+                if ($_POST['count']) {
+                    foreach ($_POST['count'] as $key => $value) {
+                        $this->getModel()->updateProductByBasket($this->getIdBasket(), $key, $value);
+                    }
+
+                    $this->fullBasket = $this->getModel()->getBasket($this->getIdBasket());
+                }
             }
         }
     }
 
-    private function getShop()
+    private function getModel()
     {
-        return App::call()->shop;
+        return new Basket();
     }
 
+    private function getIdBasket()
+    {
+        return App::call()->shop->idBasket;
+    }
 
 }

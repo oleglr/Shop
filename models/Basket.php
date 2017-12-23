@@ -43,17 +43,46 @@ class Basket extends Model
 //        );
 //    }
 
-    public function getBasket(int $idBasket)
+    public function getBasket(int $idBasket, $flag = 0)
     {
-        return $this->conn->fetchAll("SELECT * FROM {$this->tableName} WHERE id_basket = $idBasket ORDER BY id_product",
+
+        return $this->conn->fetchAll("SELECT * FROM {$this->tableName} WHERE id_basket = $idBasket AND status = $flag ORDER BY id_product",
             $this->entityClass
         );
     }
 
-    public function getCountByProduct($idProduct, $idBasket)
+    public function getProductByBasket($idBasket, $idProduct)
     {
-        return $this->conn->fetchAll("SELECT COUNT(*) as count FROM {$this->tableName} WHERE id_product = $idProduct and id_basket = $idBasket ",
+        return $this->conn->fetchAll("SELECT * FROM {$this->tableName} WHERE id_basket = $idBasket AND id_product = $idProduct AND status = 0",
             $this->entityClass
         );
+    }
+
+    public function clear($nameColumn, $valueColumn)
+    {
+        return $this->conn->execute("DELETE FROM {$this->tableName} WHERE $nameColumn = $valueColumn  AND status = 0");
+    }
+
+    public function clearDays($date)
+    {
+        return $this->conn->execute("DELETE FROM {$this->tableName} WHERE created_at < '$date'  AND status = 0");
+    }
+
+    public function deleteProductByBasket($idBasket, $idProduct)
+    {
+        return $this->conn->execute("DELETE FROM {$this->tableName} WHERE id_basket = $idBasket AND id_product = $idProduct AND status = 0");
+    }
+
+    public function updateProductByBasket($idBasket, $idProduct, $amountBasket, $flag = 0)
+    {
+        if ($flag == 1) {
+            $amountBasket = "amount + $amountBasket";
+        }
+        return $this->conn->execute("UPDATE {$this->tableName} SET amount = $amountBasket WHERE id_basket = $idBasket AND id_product = $idProduct AND status = 0");
+    }
+
+    public function updateOrderByBasket($idBasket, $delivery, $payment)
+    {
+        return $this->conn->execute("UPDATE {$this->tableName} SET status = 1, delivery = '$delivery', payment = '$payment' WHERE id_basket = $idBasket AND status = 0");
     }
 }

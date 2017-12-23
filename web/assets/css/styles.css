@@ -141,6 +141,15 @@ header .logotip img{
     color: coral;
     margin: 10px;
 }
+.add-basket{
+    border: 1px solid #ccc;
+    width: 150px;
+    height: 50px;
+    margin: 0 auto;
+    background-color: #17689b;
+    color: #fff;
+    cursor: pointer;
+}
 .add-to-basket{
     border: 1px solid #ccc;
     width: 150px;
@@ -156,7 +165,9 @@ header .logotip img{
     font-size: 20px;
     color: #fff;
     display: block;
-    margin-top: 10px;
+    width: 150px;
+    height: 40px;
+    padding-top: 10px;
     text-align: center;
 }
 .item-content{

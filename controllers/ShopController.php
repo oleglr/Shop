@@ -8,8 +8,6 @@
 
 namespace app\controllers;
 
-
-use app\base\App;
 use app\models\Basket;
 
 class ShopController extends Controller
@@ -17,6 +15,7 @@ class ShopController extends Controller
     public $idBasket;
     private $amount = 0;
     private $price = 0;
+    private $products;
 
     public function __construct()
     {
@@ -24,40 +23,28 @@ class ShopController extends Controller
             setcookie("idGuest", rand(-1000000, -1000), time() + 3600 * 24 * 7);
         }
         $this->idBasket = (!empty($_SESSION['idUser'])) ? $_SESSION['idUser'] : $_COOKIE['idGuest'];
+        $this->products = $this->getModel()->getBasket($this->idBasket);
     }
-
 
     public function setBasket()
     {
-//        setcookie("idGuest", "", time() + 3600 * 24 * 7);
-//        var_dump($_COOKIE);
+        if ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['submit']) {
 
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-            if (!$this->getModel()->create(
-                [
-                    'id_basket' => $this->idBasket,
-                    'id_product' => $_POST['id'],
-                    'name_product' => $_POST['name'],
-                    'price' => $_POST['price'],
-                    'created_at' => $this->getDate()
-                ]
-            )
-            ) {
-                return false;
+            if (empty($this->products)) {
+                $this->setProducts();
+            } else {
+                if ($this->getModel()->getProductByBasket($this->idBasket, $_POST['id'])) {
+                    $this->getModel()->updateProductByBasket($this->idBasket, $_POST['id'], 1, 1);
+                } else {
+                    $this->setProducts();
+                }
             }
-
-
-//            var_dump($_POST);
-//            var_dump($_SESSION);
-//            var_dump($_COOKIE);
-
         }
     }
 
     public function miniBasket()
     {
-        $mBasket = [
+         $mBasket = [
             'amount' => $this->prepareAmount(),
             'price' => $this->preparePrice()
         ];
@@ -66,7 +53,10 @@ class ShopController extends Controller
 
     private function prepareAmount()
     {
-        $this->amount = count($this->getModel()->getBasket($this->idBasket));
+        $amountAll = $this->getModel()->getBasket($this->idBasket);
+        foreach ($amountAll as $item) {
+            $this->amount += $item->amount;
+        }
         return $this->amount;
     }
 
@@ -74,9 +64,21 @@ class ShopController extends Controller
     {
         $priceAll = $this->getModel()->getBasket($this->idBasket);
         foreach ($priceAll as $item) {
-            $this->price += $item->price;
+            $this->price += $item->price * $item->amount;
         }
         return $this->price;
+    }
+
+    private function setProducts()
+    {
+        $this->getModel()->create(
+            [
+                'id_basket' => $this->idBasket,
+                'id_product' => $_POST['id'],
+                'name_product' => $_POST['name'],
+                'price' => $_POST['price'],
+                'created_at' => $this->getDate()
+            ]);
     }
 
 

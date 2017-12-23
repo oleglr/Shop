@@ -14,8 +14,8 @@
                 <td><?=$product['id']?></td>
                 <td><?=$product['name']?></td>
                 <td><?=$product['price']?></td>
-                <td><input style="text-align: center" type="text" size="10" value="<?=$product['count']?>"></td>
-                <td><input type="checkbox" name="delete"></td>
+                <td><input style="text-align: center" type="text" name="count[<?=$product['id']?>]" size="10" value="<?=$product['count']?>"></td>
+                <td><input type="checkbox" value="<?=$product['id']?>" name="delete[]"></td>
             </tr>
         <? endforeach; ?>
     <? endif; ?>
@@ -24,7 +24,7 @@
     <input type="submit" name="clear" value="Очистить корзину">
     <input type="submit" name="submit" value="Пересчитать">
 </p>
-<p>Общая цена: <?=$data['price']?> руб.  Количество товаров: <?=$data['countAll']?></p>
-    Вы должны зарегистрироваться или войти чтобы офорить заказ
-<p><u><a href="#">Оформить Заказ</a></u></p>
 </form>
+<p>Общая цена: <?=$data['price']?> руб.  Количество товаров: <?=$data['countAll']?></p>
+<p class="add-to-basket"><a href="/basket/order/" title="Оформить Заказ">Оформить Заказ</a></p>
+

@@ -30,7 +30,7 @@ class Controller
     private $useLayout = true;
     private $layout = 'main';
     /** @var Renderer|null  */
-    private $renderer = null;
+    public $renderer = null;
     protected $message = [];
 
 
@@ -71,7 +71,6 @@ class Controller
 
     private function renderTemplate($template, $params = [])
     {
-
         return $this->renderer->render($template, $params);
     }
 

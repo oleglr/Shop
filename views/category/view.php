@@ -8,8 +8,7 @@
             <input type="hidden" name="id" value="<?=$product->id?>">
             <input type="hidden" name="name" value="<?=$product->name?>">
             <input type="hidden" name="price" value="<?=$product->price?>">
-            <input type="submit" value="Добавить в корзину">
+            <input type="submit" class="add-basket" name="submit" value="Добавить в корзину">
         </form>
-<!--        <p class="add-to-basket"><a href="#" onclick="" title="Добавить в корзину">Купить</a></p>-->
     </div>
 <? endforeach; ?>

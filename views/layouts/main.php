@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Интернет-магазин ноутбуков</title>
     <link rel="stylesheet" href="/assets/css/styles.css" type="text/css" media="all"/>
-<!--    <script src="js/jquery.js"></script>-->
 </head>
 <body>
 <div id="container">
@@ -35,6 +34,7 @@
                     <?php if(!empty($_SESSION['sid'])): ?>
                         <li>Личный кабинет:</li>
                         <li><?=ucfirst($_SESSION['name'])?> (<?=$_SESSION['login']?>) </li>
+                        <li><a href="/basket/orders/">Мои Заказы</a></li>
                         <li><a href='/auth/logout'><u>Выйти</u> </a></li>
                     <?php else: ?>
                         <li><a href='/auth/login'><u>Войти</u></a></li>
