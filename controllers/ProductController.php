@@ -12,6 +12,9 @@ use app\base\App;
 use app\models\Product;
 
 /**
+ * Главная страница
+ * вывод товаров, карточка товара
+ *
  * Class ProductController
  * @package app\controllers
  */
@@ -35,7 +38,7 @@ final class ProductController extends Controller
     public function actionView()
     {
         $id = App::call()->request->getParams();
-        if(!$product = $this->getModel()->getOne($id)){
+        if (!$product = $this->getModel()->getOne($id)) {
             throw new \Exception("404");
         }
         $images = $this->getModel()->getImg($id);

@@ -14,10 +14,13 @@ require '../traits/TSingleton.php';
 use app\controllers\Controller;
 use app\controllers\ShopController;
 use app\models\Category;
+use app\models\Comments;
+use app\models\Product;
 use app\services\Db;
 use app\traits\TSingleton;
 
 /**
+ * Главный класс для входа в приложение
  * Используем Синглтон для одиночного подключения класса
  * подключили автозагрузчик файлов Composera
  * используем магический метод get для подключения компонентов прописанных в конфиге
@@ -27,7 +30,10 @@ use app\traits\TSingleton;
  * @package app\base
  * @property Controller main
  * @property Db db
+ * @property Category category
  * @property ShopController shop
+ * @property Comments comment
+ * @property Product product
  */
 class App
 {

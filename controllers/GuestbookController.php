@@ -11,22 +11,35 @@ namespace app\controllers;
 use app\base\App;
 use app\models\Comments;
 
-class GuestbookController extends Controller
-{
 
+/**
+ * Отзывы на сайте
+ * добавление комментария в БД, вывод шаблона
+ *
+ * Class GuestbookController
+ * @package app\controllers
+ */
+final class GuestbookController extends Controller
+{
     public function actionIndex()
     {
-        if($_SERVER['REQUEST_METHOD'] == "POST"){
-            if(!$this->getModel()->create(
-                [
-                    'fio' => trim(strip_tags($_POST['fio'])),
-                    'email' => trim(strip_tags($_POST['email'])),
-                    'text' => trim(strip_tags($_POST['text'])),
-                    'created_at' => $this->getDate()
-                ]
-            )){
-                return false;
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            try {
+                if (!$this->getModel()->create(
+                    [
+                        'fio' => trim(strip_tags($_POST['fio'])),
+                        'email' => trim(strip_tags($_POST['email'])),
+                        'text' => trim(strip_tags($_POST['text'])),
+                        'created_at' => $this->getDate()
+                    ]
+                )
+                ) {
+                    throw new \Exception("Произошла ошибка");
+                }
+            } catch (\Exception $e) {
+                $e->getMessage();
             }
+
             $this->redirect('guestbook');
         }
 

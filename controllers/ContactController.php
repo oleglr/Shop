@@ -9,7 +9,13 @@
 namespace app\controllers;
 
 
-class ContactController extends Controller
+/**
+ * Контакты
+ *
+ * Class ContactController
+ * @package app\controllers
+ */
+final class ContactController extends Controller
 {
     public function actionIndex()
     {

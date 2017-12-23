@@ -19,7 +19,7 @@ class Auth
     public function getSessionId()
     {
         $sid = $_SESSION[$this->sessionKey];
-        if(is_null($sid)){
+        if (is_null($sid)) {
             (new Session())->updateLastTime($sid);
         }
         return $sid;
@@ -29,11 +29,12 @@ class Auth
     {
         $sid = $this->generateStr();
         (new Session())->createNew($user->id, $sid, date("Y-m-d H:i:s"));
-         $_SESSION[$this->sessionKey] = $sid;
-         $_SESSION['idUser'] = $user->id;
-         $_SESSION['name'] = $user->name;
-         $_SESSION['login'] = $user->login;
+        $_SESSION[$this->sessionKey] = $sid;
+        $_SESSION['idUser'] = $user->id;
+        $_SESSION['name'] = $user->name;
+        $_SESSION['login'] = $user->login;
     }
+
     public function generateStr($length = 10)
     {
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRQSTUVWXYZ0123456789";

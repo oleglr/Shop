@@ -34,4 +34,5 @@
         </tr>
     <? endforeach; ?>
     </table>
+    <p>Общая сумма: <?= $product->amount * $product->price?> рублей</p>
 <? endif; ?>

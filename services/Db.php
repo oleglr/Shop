@@ -14,6 +14,7 @@ namespace app\services;
  * запрос на выолнение - execute
  * Одиночный выбор записи - fetchOne
  * Выбираем все записи - fetchAll
+ *
  * Class Db
  * @package app\services
  */

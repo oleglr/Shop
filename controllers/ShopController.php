@@ -10,6 +10,14 @@ namespace app\controllers;
 
 use app\models\Basket;
 
+/**
+ * Добавление товара в корзину
+ * привязка id корзины к пользователю на cookie
+ * вывод мини корзины
+ *
+ * Class ShopController
+ * @package app\controllers
+ */
 class ShopController extends Controller
 {
     public $idBasket;
@@ -44,7 +52,7 @@ class ShopController extends Controller
 
     public function miniBasket()
     {
-         $mBasket = [
+        $mBasket = [
             'amount' => $this->prepareAmount(),
             'price' => $this->preparePrice()
         ];
@@ -80,7 +88,6 @@ class ShopController extends Controller
                 'created_at' => $this->getDate()
             ]);
     }
-
 
     public function getModel()
     {

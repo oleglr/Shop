@@ -8,10 +8,11 @@
 
 namespace app\models;
 
-
 use app\base\App;
 
 /**
+ * Корзина
+ *
  * Class Basket
  * @package app\models
  * @property int id_basket
@@ -36,16 +37,8 @@ class Basket extends Model
         $this->entityClass = Basket::class;
     }
 
-//    public function getBasketByAmount(int $idBasket)
-//    {
-//        return $this->conn->fetchAll("SELECT * FROM {$this->tableName} WHERE id_basket = $idBasket GROUP BY id_product",
-//            $this->entityClass
-//        );
-//    }
-
     public function getBasket(int $idBasket, $flag = 0)
     {
-
         return $this->conn->fetchAll("SELECT * FROM {$this->tableName} WHERE id_basket = $idBasket AND status = $flag ORDER BY id_product",
             $this->entityClass
         );

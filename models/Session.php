@@ -9,6 +9,11 @@
 namespace app\models;
 
 
+/**
+ * Авторизация(проверка) пользователей
+ * Class Session
+ * @package app\models
+ */
 class Session extends Model
 {
     public function __construct()

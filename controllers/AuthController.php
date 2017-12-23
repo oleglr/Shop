@@ -9,9 +9,15 @@
 namespace app\controllers;
 
 use app\base\App;
-use app\models\User;
 use app\services\Auth;
 
+
+/**
+ * Авторизация и Регистрация пользователя
+ *
+ * Class AuthController
+ * @package app\controllers
+ */
 class AuthController extends Controller
 {
 
@@ -22,8 +28,8 @@ class AuthController extends Controller
 
     public function actionLogin()
     {
-        if($_SERVER['REQUEST_METHOD'] == "POST"){
-            if(!$user = $this->getModel()->getByLoginPass(trim(strip_tags($_POST['login'])), trim(strip_tags($_POST['password'])))){
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            if (!$user = $this->getModel()->getByLoginPass(trim(strip_tags($_POST['login'])), trim(strip_tags($_POST['password'])))) {
                 $message = "Вы ввели не корректные данные!";
                 echo $this->render("{$this->controllerName}/$this->actionName", ['message' => $message]);
                 return false;
@@ -43,8 +49,8 @@ class AuthController extends Controller
 
     public function actionSignup()
     {
-        if($_SERVER['REQUEST_METHOD'] == "POST"){
-            if($this->getModel()->create(
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            if ($this->getModel()->create(
                 [
                     'name' => trim(strip_tags($_POST['name'])),
                     'login' => trim(strip_tags($_POST['login'])),
@@ -52,8 +58,8 @@ class AuthController extends Controller
                     'created_at' => trim(strip_tags($this->getDate()))
                 ]
             )
-            ){
-                if(!$user = $this->getModel()->getByLoginPass(trim(strip_tags($_POST['login'])), trim(strip_tags($_POST['password'])))){
+            ) {
+                if (!$user = $this->getModel()->getByLoginPass(trim(strip_tags($_POST['login'])), trim(strip_tags($_POST['password'])))) {
                     return false;
                 }
                 (new Auth())->openSession($user);
@@ -68,5 +74,5 @@ class AuthController extends Controller
     {
         return App::call()->user;
     }
-    
+
 }

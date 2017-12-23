@@ -33,9 +33,10 @@ class Request
         $this->parseRequest();
     }
 
-    private function parseRequest(){
+    private function parseRequest()
+    {
         foreach ($this->patterns as $pattern) {
-            if(preg_match_all($pattern, $this->requestString, $matches)){
+            if (preg_match_all($pattern, $this->requestString, $matches)) {
                 $this->controllerName = $matches['controller'][0];
                 $this->actionName = $matches['action'][0];
                 $this->params = $matches['params'][0];
@@ -44,17 +45,19 @@ class Request
         }
     }
 
-    public function getControllerName(){
+    public function getControllerName()
+    {
         return $this->controllerName;
     }
 
-    public function getactionName(){
+    public function getactionName()
+    {
         return $this->actionName;
     }
 
-    public function getParams(){
+    public function getParams()
+    {
         return $this->params;
     }
-
 
 }

@@ -11,9 +11,11 @@ namespace app\controllers;
 use app\base\App;
 use app\interfaces\IRenderer;
 use app\services\Renderer;
+use app\traits\TController;
 
 /**
- * Запуск FrontController c обработкой request запроса в браузере
+ * Основной класс
+ * Запуск FrontControllerа c обработкой request запроса в браузере
  * Рендеринг шаблона, вывод на экран
  *
  * Class Controller
@@ -25,14 +27,10 @@ class Controller
 {
     protected $controllerName;
     protected $actionName;
-    protected $defaultAction = 'index';  //перенести в конфиг
-    protected $defaultController = 'product';  //перенести в конфиг
-    private $useLayout = true;
-    private $layout = 'main';
-    /** @var Renderer|null  */
+    /** @var Renderer|null */
     public $renderer = null;
-    protected $message = [];
 
+    use TController;
 
     /**
      * Controller constructor.
@@ -46,7 +44,7 @@ class Controller
     public function runAction($controller = null, $action = null)
     {
         $this->controllerName = $controller;
-        $this->actionName = $action ?: $this->defaultAction;
+        $this->actionName = $action ?: App::call()->config['defaultAction'];
         $action = "action" . ucfirst($this->actionName);
         //формируем имя actiona и запускаем как метод вызываемого класса
         $this->$action();
@@ -54,10 +52,10 @@ class Controller
 
     public function render($template, $params = [])
     {
-        if($this->useLayout){
+        if (App::call()->config['useLayout']) {
             $categories = App::call()->category->getAll();
             $mBasket = App::call()->shop->miniBasket();
-            return $this->renderTemplate("layouts/{$this->layout}",
+            return $this->renderTemplate("layouts/" . App::call()->config['layout'],
                 [
                     'content' => $this->renderTemplate($template, $params),
                     'categories' => $categories,
@@ -84,19 +82,4 @@ class Controller
         return date('Y-m-d H-i-s');
     }
 
-
-    public function __call($name, $arguments)
-    {
-        echo "Вызываемый метод $name не существует";
-    }
-
-    public function __set($name, $value)
-    {
-        echo "Записать свойство {$name} нельзя, так как его не существует \n";
-    }
-
-    public function __get($name)
-    {
-        echo "Получить свойство {$name} нельзя, так как его не существует \n";
-    }
 }

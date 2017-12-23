@@ -29,7 +29,7 @@ class User extends Model
 
     public function getByLoginPass($login, $pass)
     {
-     //   var_dump($pass); exit;
+        //   var_dump($pass); exit;
         $sql = "SELECT  * FROM {$this->tableName} WHERE login = :login AND password = :password";
         return $this->conn->fetchOne($sql,
             [
@@ -41,9 +41,8 @@ class User extends Model
 
     public function getCurrent()
     {
-        if($userId = $this->getUserId()){
-                //var_dump($userId);
-               return $this->getById($userId->user_id);
+        if ($userId = $this->getUserId()) {
+            return $this->getById($userId->user_id);
         }
         return null;
     }
@@ -51,7 +50,7 @@ class User extends Model
     public function getUserId()
     {
         $sid = (new Auth())->getSessionId();
-        if(!is_null($sid)){
+        if (!is_null($sid)) {
             return (new Session())->getUidBySid($sid);
         }
         return null;

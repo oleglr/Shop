@@ -16,19 +16,20 @@ use app\services\Renderer;
  * Роутинг приложения
  * Получаем имя контроллера, актион
  * создаем экзмепляр класса на основе полученного имени контроллера и запускам runAction
+ * проверка авторизованного пользователя на сайте
+ *
  * Class FrontController
  * @package app\controllers
- * @property string defaultController
+ * @property string Controller
  */
 class FrontController extends Controller
 {
-
     private $controller;
 
     protected function actionIndex()
     {
         $request = App::call()->request;
-        $this->controllerName = $request->getControllerName() ?: $this->defaultController;
+        $this->controllerName = $request->getControllerName() ?: App::call()->config['defaultController'];
         $this->actionName = $request->getActionName();
         $this->controller = App::call()->config['controller_namespace'] . ucfirst($this->controllerName) . 'Controller';
         $this->checkLogin();
@@ -41,11 +42,12 @@ class FrontController extends Controller
         }
     }
 
-    private function checkLogin(){
+    private function checkLogin()
+    {
         session_start();
-        if($this->controller != "\\" . AuthController::class){
+        if ($this->controller != "\\" . AuthController::class) {
             $user = (new User())->getCurrent();
-            if(!empty($_SESSION['sid']) && is_null($user)){
+            if (!empty($_SESSION['sid']) && is_null($user)) {
                 $this->redirect('auth/logout');
             }
         }

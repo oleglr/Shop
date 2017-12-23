@@ -13,6 +13,7 @@ use app\services\Db;
 
 /**
  * Абстрактная модель дл выборки записей из БД
+ *
  * Class Model
  * @package app\models
  */
@@ -25,7 +26,6 @@ abstract class Model
     protected $conn;
     protected $entityClass;
     protected $attributes = [];
-
 
     public function __construct()
     {
@@ -57,7 +57,7 @@ abstract class Model
     {
         $dataString = $this->prepareAttributes($data);
         $columns = implode(', ', array_keys($this->attributes));
-        if(!empty($this->attributes)){
+        if (!empty($this->attributes)) {
             return $this->conn->execute("INSERT INTO {$this->tableName} ({$columns}) VALUES ({$dataString})");
         }
     }
@@ -65,18 +65,13 @@ abstract class Model
     public function prepareAttributes(array $data)
     {
         $dataString = '';
-        foreach ($data as $key => $val){
-            if(in_array($key, static::$fields)){
+        foreach ($data as $key => $val) {
+            if (in_array($key, static::$fields)) {
                 $dataString .= ",'$val'";
                 $this->attributes[$key] = $val;
             }
         }
         return substr($dataString, 1);
-    }
-
-    public function update()
-    {
-
     }
 
     public function delete($nameColumn, $valueColumn)

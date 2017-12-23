@@ -8,16 +8,28 @@
 
 namespace app\controllers;
 
-
 use app\base\App;
 
-class CategoryController extends Controller
+
+/**
+ * Категории
+ * Вывод товаров в категории
+ * возможность добавлять товар в корзину
+ *
+ * Class CategoryController
+ * @package app\controllers
+ */
+final class CategoryController extends Controller
 {
+    /**
+     *
+     */
     public function actionView()
     {
         $idCategory = App::call()->request->getParams();
         $category = App::call()->category->getOne($idCategory);
         $products = $this->getModel()->getProductsByCategory($idCategory);
+        $img = [];
         foreach ($products as $product) {
             $images = App::call()->product->getImg($product->id);
             $img[$product->id] = (!empty($images[0]->small)) ? $images[0]->small : false;
@@ -30,6 +42,9 @@ class CategoryController extends Controller
         ]);
     }
 
+    /**
+     * @return \app\models\Category|mixed
+     */
     private function getModel()
     {
         return App::call()->category;

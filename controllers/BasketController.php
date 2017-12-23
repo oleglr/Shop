@@ -14,6 +14,14 @@ use app\interfaces\IRenderer;
 use app\models\Basket;
 
 
+/**
+ * Полная корзина, Заказ товаров
+ * вывод корзины на экран, пересчет количества, удаление товаров, очистка корзины
+ * подтверждение заказа
+ *
+ * Class BasketController
+ * @package app\controllers
+ */
 class BasketController extends Controller
 {
     private $fullBasket;
@@ -30,7 +38,6 @@ class BasketController extends Controller
         $this->fullBasket = $this->getModel()->getBasket($this->getIdBasket());
         $this->prepareBasket();
     }
-
 
     public function actionFull()
     {
@@ -82,8 +89,6 @@ class BasketController extends Controller
         echo $this->render("{$this->controllerName}/$this->actionName", [
             'products' => $products
         ]);
-
-
     }
 
     private function prepareBasket()
