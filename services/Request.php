@@ -59,5 +59,4 @@ class Request
     {
         return $this->params;
     }
-
 }

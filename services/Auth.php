@@ -46,5 +46,4 @@ class Auth
 
         return $code;
     }
-
 }

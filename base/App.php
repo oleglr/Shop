@@ -96,4 +96,5 @@ class App
         }
         throw new \Exception("Компонент $name не существует в config.php");
     }
+
 }

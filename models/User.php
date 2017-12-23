@@ -62,5 +62,4 @@ class User extends Model
             "SELECT u.* FROM {$this->tableName} u WHERE u.id = ?", [$id], $this->entityClass
         );
     }
-
 }

@@ -24,5 +24,4 @@ class Comments extends Model
         $this->tableName = 'comments';
         $this->entityClass = Comments::class;
     }
-
 }
