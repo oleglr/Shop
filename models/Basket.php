@@ -37,7 +37,7 @@ class Basket extends Model
         $this->entityClass = Basket::class;
     }
 
-    public function getBasket(int $idBasket, $flag = 0)
+    public function getBasket($idBasket, $flag = 0)
     {
         return $this->conn->fetchAll("SELECT * FROM {$this->tableName} WHERE id_basket = $idBasket AND status = $flag ORDER BY id_product",
             $this->entityClass
